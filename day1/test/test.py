@@ -19,3 +19,11 @@ def test_multiple_numbers():
 
 def test_zeros():
     assert solve(["0asd1", "1wer45", "q01b8"]) == 24
+
+
+def test_numbers_as_words():
+    assert solve(["two1nine", "eightwothree", "abcone2threexyz", "xtwone3four", "4nineeightseven2", "zoneight234", "7pqrstsixteen"]) == 281
+
+
+def test_number_as_words_overlapping():
+    assert solve(["nineninelnknxhbfk4xssrlsdmsixoneltjseightwofzf"]) == 92
