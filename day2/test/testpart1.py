@@ -1,4 +1,4 @@
-from day2.src.main import solve
+from day2.src.part1 import solve
 
 
 def test_one_game_pass():
