@@ -1,20 +1,15 @@
 from common.utils import run
 
 
-def parse_map(maps: list[str], map_name: str) -> dict[int, int]:
+def parse_map(maps: list[str], map_name: str) -> list[list[int]]:
     begin_index = maps.index(map_name) + 1
     end_index = maps.index("", begin_index) if "" in maps[begin_index:] else len(maps)
 
-    result = {}
+    result = []
 
     for line in maps[begin_index:end_index]:
         data = [int(x) for x in line.split(" ") if x.isdigit()]
-        destination_begin = data[0]
-        source_begin = data[1]
-        length = data[2]
-
-        for i in range(0, length):
-            result[source_begin + i] = destination_begin + i
+        result.append(data)
     return result
 
 
@@ -25,14 +20,19 @@ def solve(items: list[str]):
             parse_map(items, "light-to-temperature map:"), parse_map(items, "temperature-to-humidity map:"),
             parse_map(items, "humidity-to-location map:")]
 
-    locations = set()
+    locations = []
     for seed in seeds:
         temp = seed
         for m in maps:
-            temp = m.get(temp, temp)
-        locations.add(temp)
+            for mapping in m:
+                if temp in range(mapping[1], mapping[1] + mapping[2]):
+                    difference = temp - mapping[1]
+                    temp = mapping[0] + difference
+                    break
 
-    return list(locations)[0]
+        locations.append(temp)
+
+    return sorted(locations)[0]
 
 
 if __name__ == '__main__':
